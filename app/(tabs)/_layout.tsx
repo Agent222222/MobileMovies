@@ -9,7 +9,7 @@ const TabIcon = ({focused, title, icon}: any) => { // this is a excluded element
         return (
             <ImageBackground
                 source={images.highlight}
-                className="flex flex-row w-full flex-1 min-w-[112px] min-h-16 mt-4 justify-center items-center rounded-full overflow-hidden"
+                className="flex flex-row w-full flex-1 min-w-[112px] min-h-16 mt-4 justify-center items-center rounded-full overflow-hidden duration-300 ease-in-out"
             >
                 <Image
                     source={icon}
@@ -17,7 +17,7 @@ const TabIcon = ({focused, title, icon}: any) => { // this is a excluded element
                     className="size-5"
                 />
                 <Text
-                    className="text-secondary text-base font-semibold ml-2"
+                    className="text-secondary text-base font-semibold ml-2 duration-300 ease-in-out"
                 >
                     {title}
                 </Text>
@@ -25,7 +25,7 @@ const TabIcon = ({focused, title, icon}: any) => { // this is a excluded element
         )
     }else{
         return (
-            <View className="size-full justify-center items-center mt-4 rounded-full">
+            <View className="size-full justify-center items-center mt-4 rounded-full duration-300 ease-in-out">
                 <Image
                     source={icon}
                     tintColor="#A8B5DB"
@@ -46,6 +46,7 @@ const Layout = () => {
                    height: '100%',
                    justifyContent: 'center',
                    alignItems: 'center',
+                   transitionDuration: '0.3s',
                },
                tabBarStyle: {
                    backgroundColor: "#0f0D23",
