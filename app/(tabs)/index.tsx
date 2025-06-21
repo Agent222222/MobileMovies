@@ -31,14 +31,14 @@ export default function Index() {
         loading: moviesLoading,
         error: moviesError
     } = useFetch(() => fetchMovies({
-        query: 'hulk'
+        query: ''
     }))
 
     return (
-      <View className="flex-1 bg-primary items-center">
+      <View className="flex-1 bg-primary items-center ">
           <Image
               source={images.bg}
-              className="absolute w-full z-0 "
+              className="absolute w-full z-0 m"
           />
           <ScrollView
               className="flex-1 px-5"
@@ -64,7 +64,8 @@ export default function Index() {
                   <View className="flex-1 mt-5 ">
                       <SearchBar
                           onPress={() => router.push("/search")}
-                          placeholder="Search for a movie"
+                          placeholder="Search for a movie" value={""}
+                          onChangeText={function (text: string): void {}}
                       />
                       <>
                           <Text className="text-lg text-white font-bold mt-5 mb-3">Latest Movies</Text>
