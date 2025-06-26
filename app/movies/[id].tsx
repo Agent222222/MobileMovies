@@ -2,10 +2,11 @@ import { View, Text, Image, ActivityIndicator, ScrollView, TouchableOpacity,
 } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
-
+import { isMovieSaved, saveMovie, removeMovie } from "@/services/storage";
 import { icons } from "@/constants/icons";
 import useFetch from "@/services/useFetch";
 import { fetchMovieDetails } from "@/services/api";
+import {useEffect, useState} from "react";
 
 export const screenOptions = {
     headerShown: false,
@@ -32,6 +33,28 @@ const Details = () => {
     const { data: movie, loading } = useFetch(() =>
         fetchMovieDetails(id as string)
     );
+
+    const [isSaved, setIsSaved] = useState(false);
+
+    useEffect(() => {
+        if (movie?.id) {
+            (async () => {
+                const saved = await isMovieSaved(movie.id);
+                setIsSaved(saved);
+            })();
+        }
+    }, [movie?.id]);
+
+    const toggleSave = async () => {
+        if (!movie?.id) return;
+
+        if (isSaved) {
+            await removeMovie(movie.id);
+        } else {
+            await saveMovie(movie.id); // Only saving ID
+        }
+        setIsSaved(!isSaved);
+    };
 
     if (loading)
         return (
@@ -103,6 +126,14 @@ const Details = () => {
                     />
                 </View>
             </ScrollView>
+            <TouchableOpacity
+                className="absolute bottom-20 left-0 right-0 mx-5 bg-dark-200 rounded-lg py-3.5 flex flex-row items-center justify-center z-50"
+                onPress={toggleSave}
+            >
+                <Text className="text-white font-semibold text-base">
+                    {isSaved ? "Remove from Saved" : "Add to Saved"}
+                </Text>
+            </TouchableOpacity>
 
             <TouchableOpacity
                 className="absolute bottom-5 left-0 right-0 mx-5 bg-accent rounded-lg py-3.5 flex flex-row items-center justify-center z-50"

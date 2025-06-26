@@ -20,6 +20,10 @@ import MovieCard from "@/components/MovieCard";
 // change the metro file
 // create and change nativewind-env file
 // adjust tailwind.js file colors
+// npx expo install @react-native-async-storage/async-storage
+
+// npx expo start --tunnel
+
 
 // not to show the segment in the URL wu use () like /(root)/home and see it as only /home
 

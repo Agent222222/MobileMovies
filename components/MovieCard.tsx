@@ -1,8 +1,11 @@
 //Muzyka
 import { Link } from "expo-router";
 import { Text, Image, TouchableOpacity, View } from "react-native";
-
+import { useEffect, useState } from "react";
+import { isMovieSaved, saveMovie, removeMovie } from "@/services/storage";
+import { useFocusEffect } from "expo-router";
 import { icons } from "@/constants/icons";
+import React from "react";
 
 const MovieCard = ({
                        id,
@@ -11,6 +14,18 @@ const MovieCard = ({
                        vote_average,
                        release_date,
                    }: Movie) => {
+
+    const [saved, setSaved] = useState(false);
+
+    useFocusEffect(
+        React.useCallback(() => {
+            (async () => {
+                const saved = await isMovieSaved(id);
+                setSaved(saved);
+            })();
+        }, [id])
+    );
+
     return (
         <Link href={`/movies/${id}`} asChild  // we use it in order to make the clickable link to the particular movie details(we will go to the movie group dynamic route)
         >
@@ -43,9 +58,7 @@ const MovieCard = ({
                     <Text className="text-xs text-light-300 font-medium mt-1">
                         {release_date?.split("-")[0]}
                     </Text>
-                    <Text className="text-xs font-medium text-light-300 uppercase">
-                        Movie
-                    </Text>
+                    <Image source={saved ? icons.save : null} className="w-4 h-4" />
                 </View>
             </TouchableOpacity>
         </Link>
